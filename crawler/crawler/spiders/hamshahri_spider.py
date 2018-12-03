@@ -2,7 +2,7 @@ import scrapy
 
 
 class QuotesSpider(scrapy.Spider):
-    name = "quotes"
+    name = "hamshahri"
     start_urls = [
         'http://www.hamshahrionline.ir/'
     ]
