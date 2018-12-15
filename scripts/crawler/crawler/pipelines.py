@@ -19,5 +19,4 @@ class CrawlerPipeline(object):
         sentences=sent_tokenize(item["text"])
         _str = "\n".join(sentences) 
         self.file.write(_str)
-        import item
 

@@ -1,7 +1,8 @@
-import models
-import datasets
-import similarity
-from helpers import write_result_to_file
+from code.models import models
+from code import datasets
+import code.helpers
+from  code.analogy import similarity
+from code.helpers import write_result_to_file
 #set thershold
 thershold=50
 #load dataset
