@@ -1,0 +1,2 @@
+def loadmodel(path):
+    return
