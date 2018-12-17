@@ -16,6 +16,8 @@ class CrawlerPipeline(object):
         self.file.close()
 
     def process_item(self, item, spider):
+        if(spider.name=="hamshahri"):
+            item["text"]=item["text"].replace("همشهری آنلاین","")
         sentences=sent_tokenize(item["text"])
         _str = "\n".join(sentences) 
         self.file.write(_str)
