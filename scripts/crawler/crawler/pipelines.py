@@ -10,7 +10,7 @@ import json
 
 class CrawlerPipeline(object):
     def open_spider(self, spider):
-        self.file = open('corpus.txt', 'w')
+        self.file = open('corpus_'+spider.name+'.txt', 'w')
 
     def close_spider(self, spider):
         self.file.close()
