@@ -4,6 +4,8 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
+
+
 from hazm import *
 
 import json
@@ -16,9 +18,6 @@ class CrawlerPipeline(object):
         self.file.close()
 
     def process_item(self, item, spider):
-        if(spider.name=="hamshahri"):
-            item["text"]=item["text"].replace("همشهری آنلاین","")
         sentences=sent_tokenize(item["text"])
         _str = "\n".join(sentences) 
         self.file.write(_str)
-
