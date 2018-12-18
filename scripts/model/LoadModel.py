@@ -1,11 +1,11 @@
 """
     auther Mohamad M. Jafari
 
-    This file contains a CLASS for load and use embedding models!
+    This file contains a CLASS for loading and useing embedding models!
 
     Essential materials for dealing with [word2vec, gensim] models is implemented!
 
-    There are some extra facilities(as estatic methods)to perform bunch of other operation on models,
+    There are some extra facilities to perform bunch of other operation on models,
      like reordering, changeing format and etc.
     
 """
