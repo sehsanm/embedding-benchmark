@@ -2,13 +2,14 @@ import scrapy
 
 
 class QuotesSpider(scrapy.Spider):
-    name = "hamshahri"
+    name = "dorsablog"
     start_urls = [
-        'http://www.hamshahrionline.ir/'
+        'https://dorsablog.com/update'
     ]
-    allowed_domains=["hamshahrionline.ir"]
+    allowed_domains=["dorsablog.com"]
     def parse(self, response):
         for quote in response.css('p::text').extract():
+            yield quote
             yield {
                 'text': quote.strip()
             }
