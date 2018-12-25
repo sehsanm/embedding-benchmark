@@ -6,6 +6,7 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 
+
 from hazm import *
 
 import json
@@ -21,3 +22,4 @@ class CrawlerPipeline(object):
         sentences=sent_tokenize(item["text"])
         _str = "\n".join(sentences) 
         self.file.write(_str)
+
