@@ -15,4 +15,4 @@ You can download the corpus using this [LINK](https://sbuacir-my.sharepoint.com/
 ## IrBlogs
 irBlogs is a standard Persian weblogs collection that is suitable for studying Persian social networks and evaluation of graph mining and blog retrieval algorithms.
 
-You can find the collection using this [LINK](http://dbrg.ut.ac.ir/irblogs/)
+You can find the collection [here](http://dbrg.ut.ac.ir/irblogs/)
