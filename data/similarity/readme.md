@@ -7,10 +7,9 @@
   
 این فایل comma-separated می باشد و مشتمل بر 14 ستون است به ترتیب زیر:
   
-  | Column Num  | value |
+  | 1  | 2| 3| 4| 5| 6| 7| 8| 9| 10| 11| 12 | 13 | 14 |
 | ------------- | ------------- |
-| 1  | Word 1  |
-| 2  | Word 2  |
+|Word 1   | Word 2  |FarsnetSim1 | FarsnetSim2 | wup | jcn | vector | vector-pairwise | res | lin | path | lch | hso | lesk|
   
 <p> 
   <b>
