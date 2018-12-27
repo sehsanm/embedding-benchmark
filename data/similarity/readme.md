@@ -2,7 +2,7 @@
   
   <p> 
   <b>
- farsnet-semantic-similarity-dataset.csv راهنمای فایل 
+  راهنمای فایل farsnet-semantic-similarity-dataset.csv
     </b>
   
 این فایل comma-separated می باشد و مشتمل بر 14 ستون است به ترتیب زیر:
