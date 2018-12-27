@@ -11,3 +11,8 @@ This link contains the extracted text from FaWiki XML file.
 First, we extracted the text data. Next, we normalized it and simply segmented its sentences using regular expressions.
     
 You can download the corpus using this [LINK](https://sbuacir-my.sharepoint.com/personal/se_mahmoudi_sbu_ac_ir/_layouts/15/download.aspx?SourceUrl=%2Fpersonal%2Fse_mahmoudi_sbu_ac_ir%2FDocuments%2Fsbunlp%2FwikiDump_dotSplitData_Nikvand.zip) here
+
+## IrBlogs
+irBlogs is a standard Persian weblogs collection that is suitable for studying Persian social networks and evaluation of graph mining and blog retrieval algorithms.
+
+You can find the collection [here](http://dbrg.ut.ac.ir/irblogs/)
