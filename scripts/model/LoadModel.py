@@ -46,6 +46,14 @@ class W2V():
     def __iter__(self):
         for w in self.vocabulary:
             yield w, self[vocabulary.index(w)]
+    # returns word's vector if it existed!
+    def get_vector(self, word):
+        try:
+            index = self.vocabulary.index(word)
+            return self.vectors[index]
+        except:
+            print("word not found!")
+            raise
 
     @property
     def words(self):
@@ -99,7 +107,7 @@ class W2V():
     @staticmethod
     def from_bin(fname):
     	model = gensim.models.KeyedVectors.load_word2vec_format(fname, binary=True)
-#        to implement
+        return W2V(vocabulary=list(model.vocab), vectors=np.array(model.vocab))
     @staticmethod
     def to_word2vec(w, fname, binary=False):
         with open(fname, 'wb') as fout:
