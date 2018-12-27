@@ -4,9 +4,14 @@
   <b>
  farsnet-semantic-similarity-dataset.csv راهنمای فایل 
     </b>
+  
 این فایل comma-separated می باشد و مشتمل بر 14 ستون است به ترتیب زیر:
-  1| Word 1
-  2| Word 2
+  
+  | Column Num  | value |
+| ------------- | ------------- |
+| 1  | Word 1  |
+| 2  | Word 2  |
+  
 <p> 
   <b>
 روش path
