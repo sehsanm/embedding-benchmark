@@ -12,17 +12,17 @@ def _euclideanDistance(v1,v2):
 def getKNear(r1,r2,r3,model,thershold,method):
     distances=[]
     if(method=="Cosine"):
-        for word in model.words:
+        for i,word in enumerate(model.words):
             try:
-                distances.append({'word':word,"distance":_cosinDistance(r3+r2-r1,model.getVec(word))})
+                distances.append({'word':word,"distance":_cosinDistance(r3+r2-r1,model.vectors[i])})
             except:
                 print("error by word ",word)
     elif(method=="Euclidean"):
-        for vector,word in model.vectors():
-            distances.append({'word':word,"distance":_euclideanDistance(r3+r2-r1,vector)})
+        for i,word in enumerate(model.words):
+            distances.append({'word':word,"distance":_euclideanDistance(r3+r2-r1,model.vectors[i])})
     elif method=="PairDirection":
-        for vector,word in model.vectors():
-            distances.append({'word':word,"distance":_cosinDistance(r2-r1,vector-r3)})
+        for i,word in enumerate(model.words):
+            distances.append({'word':word,"distance":_cosinDistance(r2-r1,model.vectors[i]-r3)})
     else:
         raise Exception("bad argument for getKNear function, method parameter can be one of these : Cosine,Euclidean,PairDirection")
 

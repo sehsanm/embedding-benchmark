@@ -13,7 +13,9 @@ for solving analogy questions first of all we should get corresponding vector of
 
 for evaluating method we find k nearest vectors to v3+v2-v1 and we check existence of reference answer(answer in analogy test)in those k words. 
 
-you can run test by : `python3 -m scripts.test.analogy_test`
+you can run test by : `python3 -m scripts.test.analogy_test -m batch -t 100 -i data/model/sample.vec`
+
+options discriptions can be find by : `python3 -m scripts.test.analogy_test -h`
 
 for now similarity.getKnear() implement finding k nearest vectors based on cosine , euclidean  and pair direction distances . but it is not a efficient method because it compute distance of each word in vocabulary by vector d(which for each question equal to v3+v2-v1).
 
