@@ -106,3 +106,4 @@ venv.bak/
 .scripts/crawler/corpus.txt
 
 #ide
+.vscode/**
