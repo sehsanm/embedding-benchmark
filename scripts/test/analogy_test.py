@@ -15,7 +15,7 @@ analog_datasets=datasets.loadAnalogyDataset('data/analogy')
 print_inplace("analogy dataset loaded.")
 #load model
 print_inplace("loading embedding model ...")
-# model = models.W2V.from_text('data/models/khafan.txt')
+# model = models.W2V.from_text('data/models/sample.vec')
 model = models.W2V.fasttext_from_text('../data/model.vec')
 print_inplace("embedding model loaded.\n")
 
