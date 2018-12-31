@@ -10,3 +10,4 @@ Folder structure :
 * data/categories Contains the catgories dataset(s) 
 * code This folder contains codes that will be used to run all evaluation related tasks and utulities to downlaod the corpus files 
 * scripts This folder contains cleansing/crawling and any other once off activity that needs to be done. 
+
