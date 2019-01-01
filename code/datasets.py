@@ -11,7 +11,7 @@ def loadAnalogyDataset(path):
     for f in allfiles:
         with open (f, "r") as myfile:
             lines = myfile.read().splitlines()
-        dataset={"name":f,'rows':[]}
+        dataset={"name":f.split("/")[-1],'rows':[]}
         cat = None
         for l in lines:
             cols =  l.split(",")
