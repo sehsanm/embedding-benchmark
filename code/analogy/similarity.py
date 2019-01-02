@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.preprocessing import normalize
 from math import sqrt
+
 def _cosinDistance(v1,v2):
     return np.dot(v1,v2)/(np.linalg.norm(v1)*np.linalg.norm(v2))
 
@@ -46,17 +47,21 @@ def getKNearBatch(X,model,method,thershold):
     A=np.array(np.zeros((len(X),len(V[0]))))
     B=np.array(np.zeros((len(X),len(V[0]))))
     C=np.array(np.zeros((len(X),len(V[0]))))
+    meanVector=np.mean(model.vectors,axis=0)
     if method=="Cosine":
-        for i,w in enumerate(X[:,0]):
-            A[i]=model.getVec(w)
-        for i,w in enumerate(X[:,1]):
+        for i,x in enumerate(X):
             try:
-                B[i]=model.getVec(w)
+                A[i]=model.getVec(x[0])
             except:
-                print("\n have error for word: ",w)
-            
-        for i,w in enumerate(X[:,2]):
-            C[i]=model.getVec(w)
+                A[i]=meanVector
+            try:
+                B[i]=model.getVec(x[1])
+            except:
+                B[i]=meanVector
+            try:        
+                C[i]=model.getVec(x[2])
+            except:
+                C[i]=meanVector
         D=B-A+C
     
     # now D is a d(embedding dimension)xM(number of questions) matrice.
