@@ -1,4 +1,3 @@
-
 """
     auther Mohamad M. Jafari
 
@@ -20,13 +19,12 @@ from numpy import dot
 from numpy.linalg import norm
 from random import choice
 from string import ascii_lowercase
-import io
+
 class W2V():
     def __init__(self, vocabulary, vectors):
         self.vocabulary = vocabulary # list of vocab 
         self.vectors = np.asarray(vectors) # numpy array, each row contains one word vector 
                                            # (corresponding to vocab list)
-        self._wordDict={vocabulary[i]:vectors[i] for i in range(0,len(vocabulary))}
 
     #    magic method for reach vector corresponding to word
     def __getitem__(self, index):
@@ -48,16 +46,18 @@ class W2V():
     def __iter__(self):
         for w in self.vocabulary:
             yield w, self[vocabulary.index(w)]
+    # returns word's vector if it existed!
+    def get_vector(self, word):
+        try:
+            index = self.vocabulary.index(word)
+            return self.vectors[index]
+        except:
+            print("word not found!")
+            raise
 
-
-    def getVec(self,word):
-        return self.wordDict[word]
     @property
     def words(self):
         return self.vocabulary   
-    @property
-    def wordDict(self):
-        return self._wordDict   
     @property
     def shape(self):
         return self.vectors.shape
@@ -88,7 +88,7 @@ class W2V():
         vectors = []
         if encoding:
             with open(fname, 'r', encoding="utf-8") as fin:
-                for line in fin.readlines():
+                for line in fin:
                     line = line.split(" ")
                     word, vector = line[0], [float(x) for x in line[1:]]
                     words.append(word)
@@ -98,35 +98,16 @@ class W2V():
             with open(fname, 'r') as fin:
                 for line in fin:
                     line = line.split(" ")
-                    try:
-                        if(len(line)>0):
-                            word, vector = line[0], [float(x) for x in line[1:]]
-                    except:
-                        print("error in loading model in modles.py by reading this ",line)
-                        print("exited by error")
-                        exit(0)
-                    # word, vector = line[0], [float(x) for x in line[1:]]
+                    word, vector = line[0], [float(x) for x in line[1:]]
                     words.append(word)
                     vectors.append(vector)
             return W2V(vocabulary=words, vectors=vectors)
 
-    @staticmethod
-    def fasttext_from_text(fname):
-        words = []
-        vectors = []
-        fin = io.open(fname, 'r', encoding='utf-8', newline='\n', errors='ignore')
-        n, d = map(int, fin.readline().split())
-        data = {}
-        for line in fin:
-            tokens = line.rstrip().split(' ')
-            words.append(tokens[0])
-            vectors.append([float(t) for t in tokens[1:]])
-            
-        return W2V(vocabulary=words, vectors=vectors)
+
     @staticmethod
     def from_bin(fname):
     	model = gensim.models.KeyedVectors.load_word2vec_format(fname, binary=True)
-#        to implement
+        return W2V(vocabulary=list(model.vocab), vectors=np.array(model.vocab))
     @staticmethod
     def to_word2vec(w, fname, binary=False):
         with open(fname, 'wb') as fout:
