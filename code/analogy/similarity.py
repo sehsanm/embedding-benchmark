@@ -2,6 +2,11 @@ import numpy as np
 from sklearn.preprocessing import normalize
 from math import sqrt
 
+from tqdm import tqdm
+def batched(X,batchsize):
+    s=[iter(X)]*batchsize
+    return zip(*s)
+
 def _cosinDistance(v1,v2):
     return np.dot(v1,v2)/(np.linalg.norm(v1)*np.linalg.norm(v2))
 
@@ -35,7 +40,7 @@ def getKNear(r1,r2,r3,model,thershold,method):
     return result
 
 
-def getKNearBatch(X,model,method,thershold):
+def getKNearBatch(X,model,method,thershold,batchsize):
     V=model.vectors
     # X: matrice of questions. in each column  is a list of string  words w1,w2,w3.each row is 
     # a single query
@@ -44,42 +49,48 @@ def getKNearBatch(X,model,method,thershold):
     # method : Cosine,Euclidean,PairDirection
 
     # for cosine distance :
-    A=np.array(np.zeros((len(X),len(V[0]))))
-    B=np.array(np.zeros((len(X),len(V[0]))))
-    C=np.array(np.zeros((len(X),len(V[0]))))
+
+    A=np.array(np.zeros((batchsize,len(V[0]))))
+    B=np.array(np.zeros((batchsize,len(V[0]))))
+    C=np.array(np.zeros((batchsize,len(V[0]))))
     meanVector=np.mean(model.vectors,axis=0)
     if method=="Cosine":
-        for i,x in enumerate(X):
-            try:
-                A[i]=model.getVec(x[0])
-            except:
-                A[i]=meanVector
-            try:
-                B[i]=model.getVec(x[1])
-            except:
-                B[i]=meanVector
-            try:        
-                C[i]=model.getVec(x[2])
-            except:
-                C[i]=meanVector
-        D=B-A+C
-    
-    # now D is a d(embedding dimension)xM(number of questions) matrice.
-    # each row of D is a vector representing w2-w1+w3. we want to get cosine distance of each 
-    # row by all vectors of vocabulary. the result should be a matrice by M(number of questions)xV(vocabulary size)
-    # and then we select K minimum item of each row which make matrice to have MxK dimension.
+        Rw=[] # result answer words( k neares neighbors to v2-v1+v3) to each question
+        for c,b in enumerate(batched(X,batchsize)):
+            print(c,"/",len(X)/batchsize)
+            for i,x in enumerate(b):
+                try:
+                    A[i]=model.getVec(x[0])
+                except:
+                    A[i]=meanVector
+                try:
+                    B[i]=model.getVec(x[1])
+                except:
+                    B[i]=meanVector
+                try:        
+                    C[i]=model.getVec(x[2])
+                except:
+                    C[i]=meanVector
+            D=B-A+C
 
-    # for computing cosine distance first we should normalize all vectors. 
-        D=np.array(D)
-        V=np.array(V)
-        nD=normalize(D,axis=1)
-        nV=normalize(V,axis=1)
-        R=np.matmul(nV,nD.T)
-        R=R.argsort(axis=0)
-        R=R[-thershold:,:]
-        Rw=[]
-        for r  in R:
-              Rw.append([model.words[int(id)] for id in r])  
+    
+            # now D is a d(embedding dimension)xM(number of questions) matrice.
+             # each row of D is a vector representing w2-w1+w3. we want to get cosine distance of each 
+            # row by all vectors of vocabulary. the result should be a matrice by M(number of questions)xV(vocabulary size)
+             # and then we select K minimum item of each row which make matrice to have MxK dimension.
+
+            # for computing cosine distance first we should normalize all vectors. 
+            D=np.array(D)
+            V=np.array(V)
+            nD=normalize(D,axis=1)
+            nV=normalize(V,axis=1)
+            R=np.matmul(nV,nD.T)
+            R=R.argsort(axis=0)
+            R=R[-thershold:,:].T
+            bRw=[]
+            for r  in R:
+                bRw.append([model.words[int(id)] for id in r])
+            Rw+=bRw
         return Rw
     elif method=="PairDirection":
         for w,i in enumerate(X[0]):
