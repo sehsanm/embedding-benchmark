@@ -1,10 +1,12 @@
 import numpy as np
 from sklearn.preprocessing import normalize
 from math import sqrt
+
 from tqdm import tqdm
 def batched(X,batchsize):
     s=[iter(X)]*batchsize
     return zip(*s)
+
 def _cosinDistance(v1,v2):
     return np.dot(v1,v2)/(np.linalg.norm(v1)*np.linalg.norm(v2))
 
@@ -47,6 +49,7 @@ def getKNearBatch(X,model,method,thershold,batchsize):
     # method : Cosine,Euclidean,PairDirection
 
     # for cosine distance :
+
     A=np.array(np.zeros((batchsize,len(V[0]))))
     B=np.array(np.zeros((batchsize,len(V[0]))))
     C=np.array(np.zeros((batchsize,len(V[0]))))
@@ -69,6 +72,7 @@ def getKNearBatch(X,model,method,thershold,batchsize):
                 except:
                     C[i]=meanVector
             D=B-A+C
+
     
             # now D is a d(embedding dimension)xM(number of questions) matrice.
              # each row of D is a vector representing w2-w1+w3. we want to get cosine distance of each 
