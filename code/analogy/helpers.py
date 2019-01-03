@@ -5,3 +5,4 @@ def write_result_to_file(data_set_name , totals , corrects,path):
         f.write(":dataset "+data_set_name+"\n")
         for cat in totals:
             f.write(cat+" "+str(totals[cat])+","+str(corrects[cat])+"\n")
+

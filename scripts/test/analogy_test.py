@@ -48,15 +48,17 @@ for dataset in analog_datasets:
 	if(options.method=='batch'):
 		X=[r["words"] for r in dataset['rows']]
 		X=np.array(X)
-		result=similarity.getKNearBatch(X,model,"Cosine",options.thereshold)
+		result=similarity.getKNearBatch(X,model,"Cosine",options.thereshold,50)
 		result=np.array(result)
-		for i,row in enumerate(dataset["rows"]):
-
+		# for i,row in enumerate(dataset["rows"]):
+		rows=dataset['rows']
+		for i,row in enumerate(result):
+			row=rows[i]
 			if row["category"] not in totals:
 				totals[row["category"]]=0
 				corrects[row["category"]]=0
 			totals[row["category"]] = totals[row["category"]] + 1
-			if(row["words"][3] in result[:,i]):
+			if(row["words"][3] in result[i,:]):
 				corrects[row["category"]]+=1
 		write_result_to_file(dataset["name"] , totals , corrects,"results/analogy/"+dataset["name"])
 	else:
