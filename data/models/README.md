@@ -8,27 +8,27 @@ this model created on wiki corpus by fasttext. the command which build model for
 
 I tested this model in analogy and similarity test.
 
-##analogy result:
+## analogy result:
 
-`
-semantic-capitals 4691,3514
+first column is category , second column is total number of questions in each category and third column is number of correct answers 
 
-semantic-Whole to part 420,68
+semantic-capitals,4691,3514
 
-syntactic-Comparative Adjectives 2756,1927
+semantic-Whole to part,420,68
 
-syntactic-antonym 506,239
+syntactic-Comparative Adjectives,2756,1927
 
-semantic-family 600,349
+syntactic-antonym,506,239
 
-semantic-currency 6006,1298
+semantic-family,600,349
 
-syntactic-Superlative Adjectives 2756,1611
+semantic-currency,6006,1298
 
-syntactic-verb 1964,708
-`
+syntactic-Superlative Adjectives,2756,1611
 
-##similarity results:
+syntactic-verb,1964,708
+
+## similarity results:
 
 ### spearman rate:
 
