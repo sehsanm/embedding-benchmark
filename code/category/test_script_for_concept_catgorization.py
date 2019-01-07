@@ -1,4 +1,4 @@
-# from code.models import models
+import LoadModel as models
 import random
 from sklearn.cluster import KMeans
 from collections import Counter
@@ -18,16 +18,9 @@ class concept_categorization:
                 correct+=1
         return correct/len(self.member)
 
-class embedding_model:
-
-    def __init__(self, inputModel):
-        print("load model ...")
-        #self.model = models.W2V.fasttext_from_text(inputModel)
-
-    def get_word2vec(word , inputModel):
-        # vec = list(self.model.getVec(word))
-        # return vec
-        return [random.randint(1,100),random.randint(1,100),random.randint(1,100)]
+def get_word2vec(model , word):
+    vec = list(model.get_vector(word))
+    return vec
 
 def k_means(input_vectors , K):
     kmeans = KMeans(n_clusters=K)
@@ -77,10 +70,10 @@ def preprocessing(input_file,input_model):
         result.append(mach)
 
     vectors = []
-    word2vec = embedding_model(input_model)
 
+    model = models.W2V.from_W2V(input_model)
     for item in members:
-        current_vector = word2vec.get_word2vec(str(item))
+        current_vector =get_word2vec(model , str(item))
         word_embeddings.update([(str(item), current_vector)])
         vectors.append(current_vector)
 
@@ -129,7 +122,7 @@ def calculate_score(result,k_means_output, K):
 
 
 
-    write_in_file("final_output" + '.txt', final_result_str)
+    write_in_file("output" + '.csv', final_result_str)
 
     return final_result, score_dict
 
@@ -157,7 +150,7 @@ def main(input_file,inputModel):
 
 if __name__ == '__main__':
     input_file="./data/categories/concept-categorization-dataset.csv"
-    input_model="./data/models/sample.vec"
+    input_model="./data/models/sample.txt"
     main(input_file,input_model)
 
 
