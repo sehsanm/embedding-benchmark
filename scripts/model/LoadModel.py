@@ -19,6 +19,8 @@ from numpy import dot
 from numpy.linalg import norm
 from random import choice
 from string import ascii_lowercase
+import matplotlib.pyplot as plt
+from sklearn.manifold import TSNE
 
 class W2V():
     def __init__(self, vocabulary, vectors):
@@ -106,8 +108,9 @@ class W2V():
 
     @staticmethod
     def from_bin(fname):
-    	model = gensim.models.KeyedVectors.load_word2vec_format(fname, binary=True)
+        model = gensim.models.KeyedVectors.load_word2vec_format(fname, binary=True)
         return W2V(vocabulary=list(model.vocab), vectors=np.array(model.vocab))
+    
     @staticmethod
     def to_word2vec(w, fname, binary=False):
         with open(fname, 'wb') as fout:
@@ -127,6 +130,37 @@ class W2V():
             wtov = pickle.load(fin)
         vec, voc = wtov["vectors"], wtov["vocabulary"]
         return W2V(vocabulary=voc, vectors=vec)
+
+
+    # Creates and TSNE model and plots it
+    @staticmethod
+    def tsne_plot(words, vectors):
+    
+    
+        assert len(words)==len(vectors)
+#    for word in model.wv.vocab:
+#        tokens.append(model[word])
+#        labels.append(word)
+#    
+        tsne_model = TSNE(perplexity=40, n_components=2, init='pca', n_iter=2500, random_state=23)
+        new_values = tsne_model.fit_transform(vectors)
+
+        x = []
+        y = []
+        for value in new_values:
+            x.append(value[0])
+            y.append(value[1])
+            
+            plt.figure(figsize=(16, 16)) 
+        for i in range(len(x)):
+            plt.scatter(x[i],y[i])
+            plt.annotate(words[i],
+                         xy=(x[i], y[i]),
+                         xytext=(5, 2),
+                         textcoords='offset points',
+                         ha='right',
+                         va='bottom')
+        plt.show()
 
     def save(self, fname):
         vec = self.vectors
@@ -169,4 +203,5 @@ if __name__ == "__main__":
     my_w2v.normalize_words(ord=2, inplace=True)
 #    print(my_w2v.vectors==tmp)
     print(len(my_w2v.nearest_neighbors(vocabulary[3], k=10)))
+    W2V.tsne_plot(my_w2v.words, my_w2v.vectors)
     
