@@ -44,7 +44,6 @@ for row in data:
 
         for word in most_similars:
             if (groundTruth[j].strip() is word[0].strip()):
-                print('ghj')
                 tp+=1
 
     j+=1
